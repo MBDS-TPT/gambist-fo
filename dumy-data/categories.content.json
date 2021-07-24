@@ -1,0 +1,26 @@
+[
+    {
+        "id": "1",
+        "label": "Football"
+    },
+    {
+        "id": "2",
+        "label": "Basketball"
+    },
+    {
+        "id": "3",
+        "label": "Handball"
+    },
+    {
+        "id": "4",
+        "label": "Football  américain"
+    },
+    {
+        "id": "5",
+        "label": "Handball"
+    },
+    {
+        "id": "6",
+        "label": "Rugby"
+    }     
+]

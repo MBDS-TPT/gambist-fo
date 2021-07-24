@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1",
+        "teamA": "Real Madrid",
+        "teamB": "Chelsea"
+    },
+    {
+        "id": "2",
+        "teamA": "Arsenal",
+        "teamB": "Everton"
+    },
+    {
+        "id": "3",
+        "teamA": "Atletico",
+        "teamB": "Leicester City"
+    },
+    {
+        "id": "4",
+        "teamA": "PSG",
+        "teamB": "Manchester City"
+    }
+]
