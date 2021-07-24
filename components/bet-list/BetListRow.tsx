@@ -16,13 +16,13 @@ const BetListRow:React.FC<BetListRowProps> = ({
 
     const [betWon, setBetWon] = useState<boolean>(false);
 
-    const wonTheBet = () => {
+    const wonTheBet = () : boolean => {
         if(!bet.team) {
             return bet.match?.scoreA == bet.match?.scoreB
         } else if(bet.team?.id == bet.match?.teamA?.id) {
-            return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA > bet.match?.scoreB;
+            return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA > bet.match?.scoreB || false;
         }
-        return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA < bet.match?.scoreB; 
+        return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA < bet.match?.scoreB || false; 
     }
 
     useEffect(() => {
@@ -52,8 +52,8 @@ const BetListRow:React.FC<BetListRowProps> = ({
                     <span>{bet.betValue} $</span>
                 </div>
                 <div className={`bet-winnings ${betWon ? 'bet-won' : 'lost-bet'}`}>
-                    {betWon ? (
-                        <span>{((bet.betValue * bet.odds)-bet.betValue).toFixed(2)} $</span>
+                    {bet && betWon ? (
+                        <span>{((bet.betValue * (bet.odds || 1))-bet.betValue).toFixed(2)} $</span>
                     ) : (
                         <span>{(-(bet.betValue).toFixed(2))} $</span>
                     )}

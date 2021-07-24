@@ -29,14 +29,16 @@ const BetModal: React.FC<BetModalProps> = ({
     const [betValue, setBetValue] = useState<number>(0);
 
     const getBetOdds = () => {
-        if(!match) return 0;
+        if(!match) 
+            return 0;
         if(selectedTeam) {
             if(selectedTeam.id == match?.teamA?.id) {
-                return match?.oddsA;
+                return match?.oddsA || 0;
             }
-            return match?.oddsB;
-        } else {
-            return match?.oddsNul;
+            return match?.oddsB || 0;
+        } 
+        else {
+            return match?.oddsNul || 0;
         } 
     }
 
