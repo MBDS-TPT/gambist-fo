@@ -58,7 +58,7 @@ const HomePage = (props: PageProps) => {
             BetService.addBetToLS(res);
             setUserBets([
                 ...userBets,
-                res
+                res.data
             ]);
         });
     }

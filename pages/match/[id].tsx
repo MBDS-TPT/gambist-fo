@@ -6,6 +6,9 @@ import MatchResult from "../../components/match-result/MatchResult";
 import Page from "../../components/page-wrapper/Page";
 import { Match } from "../../model/Model";
 import { MatchService } from "../../services/match/match.service";
+import QRCode  from "react-qr-code";
+import { useState } from "react";
+import { useEffect } from "react";
 
 interface PageProps {
     match: Match;
@@ -14,11 +17,19 @@ interface PageProps {
 const MatchDetailPage: React.FC<PageProps> = ({
     match
 }) => {
+
+    const [qrCodeUrl, setQrCodeUrl] = useState<string>("/");
+
+    useEffect(() => {
+        setQrCodeUrl(MatchService.getMatchUrl(match.id));
+    }, []);
+
     return (
         <Wrapper className="match-details">
             <Page>
                 <MatchCard match={match} />
                 <MatchResult  />
+                <QRCode value={qrCodeUrl} />
             </Page>
         </Wrapper>   
     )
