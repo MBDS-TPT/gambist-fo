@@ -27,6 +27,7 @@ const BetModal: React.FC<BetModalProps> = ({
 }) => {
 
     const [betValue, setBetValue] = useState<number>(0);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const getBetOdds = () => {
         if(!match) 
@@ -60,10 +61,16 @@ const BetModal: React.FC<BetModalProps> = ({
             if(selectedTeam)
                 bet.teamId = selectedTeam.id;
             if(onSubmit) {
-                onSubmit(bet)
-                .then((res: any)=> {
-                    onClose();
-                });
+                onSubmit(bet, onClose, (message: string) => {
+                    setErrorMessage(message);
+                })
+                // .then((res: any)=> {
+                //     console.log("===", res);
+                //     // onClose();
+                // })
+                // .catch((err:any) => {
+                //     console.log(err);
+                // });
             }
         }
     }
@@ -81,6 +88,7 @@ const BetModal: React.FC<BetModalProps> = ({
                 <div className="team-versus">
                     {match?.teamA?.name} vs {match?.teamB?.name}
                 </div>
+                <span className="error-message">{errorMessage}</span>
                 <BetSpinner value={defaultValue} onChange={onChangeBet} className="bet-modal-spinner" name="bet-value"/>
                 <div className="bet-winnings">
                     <span>WINNINGS</span>
@@ -139,6 +147,9 @@ const Wrapper = styled.form`
             color: var(--green);
             font-size: 18px;
         }
+    }
+    .error-message {
+        color: var(--red);
     }
 `;
 

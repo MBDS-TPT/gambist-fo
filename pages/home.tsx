@@ -52,14 +52,20 @@ const HomePage = (props: PageProps) => {
         }
     }
 
-    const OnPostBet = async (bet: any) => {
+    const OnPostBet = async (bet: any, successCallback = () => {}, errorCallback = (message: any) => {}) => {
         BetService.postBet(bet)
         .then((res) => {
-            BetService.addBetToLS(res);
-            setUserBets([
-                ...userBets,
-                res.data
-            ]);
+            if(res.result !== "KO") {
+                BetService.addBetToLS(res);
+                setUserBets([
+                    ...userBets,
+                    res.data
+                ]);
+                successCallback();
+            }
+            else {
+                errorCallback(`${res.message} (${AuthService.getUserBalance()} $)`);
+            }
         });
     }
 
