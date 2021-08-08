@@ -3,19 +3,21 @@ import styled from 'styled-components';
 
 export interface CTAProps {
     className?: string;
-    onClick: any;
+    onClick?: any;
     success?: Boolean;
+    href?: string;
 }
 
 const CTA:React.FC<CTAProps> = ({
     children,
     className='',
-    onClick
+    onClick=()=>{},
+    href
 }) => {
 
 
     return (
-        <Wrapper className={["cta btn", className].join(' ')} onClick={onClick} href="#">
+        <Wrapper className={["cta btn", className].join(' ')} onClick={onClick} href={href}>
             {children}
         </Wrapper>
     );

@@ -52,5 +52,6 @@
     "Authentification": {
         "Login": "authentification/login",
         "Registration": "authentification/registration"
-    }
+    },
+    "Currency": "$"
 }

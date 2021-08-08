@@ -5,6 +5,7 @@ export const ColorStyles = css`
         --dark: #343a40;
         /* --light-gray: #e8e9eb; */
         --light-gray: #edeff4;
+        --gray: #cbcdd2;
         --dark-gray: #6c757d;
         --white: #fff;
         --green: #64b000;

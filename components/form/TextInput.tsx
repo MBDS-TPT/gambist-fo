@@ -12,6 +12,7 @@ export interface TextInputProps {
     name: string;
     required?: boolean;
     disabled?: boolean;
+    autoComplete?: string | "off" | "on";
 }
 
 const TextInput:React.FC<TextInputProps> = ({
@@ -23,7 +24,8 @@ const TextInput:React.FC<TextInputProps> = ({
     name,
     placeholder,
     required = false,
-    disabled = false
+    disabled = false,
+    autoComplete = "off"
 }) => {
 
     const [_value, _setValue] = useState<any>(value);
@@ -43,6 +45,7 @@ const TextInput:React.FC<TextInputProps> = ({
                 name={name}
                 placeholder={placeholder}
                 required={required}
+                autoComplete={autoComplete}
                 />
         </Wrapper>
     );
