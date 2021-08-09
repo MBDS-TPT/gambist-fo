@@ -29,6 +29,7 @@ const ProfilePage = (props: PageProps) => {
 
     useEffect(() => {
         setUserInfos(AuthService.getUserInfosFromLS());
+        setBalance(AuthService.getUserBalance());
     }, []);
 
     return (

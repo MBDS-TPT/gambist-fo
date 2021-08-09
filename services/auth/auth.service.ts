@@ -23,6 +23,10 @@ export class AuthService extends BasicService {
         else return null;
     }
 
+    static isLogged() {
+        return !!this.getUserInfosFromLS();
+    }
+
     static saveUserInfosToLS(user: any) {
         localStorage.setItem('userinfos', JSON.stringify(user));
     }

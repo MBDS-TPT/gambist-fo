@@ -33,6 +33,7 @@ const HomePage = (props: PageProps) => {
     const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
     const [allCategorySelected, setAllCategorySelected] = useState<Boolean>(true);
     const [userBets, setUserBets] = useState<Bet[]>([]);
+    const [userBalance, setUserBalance] = useState<number>(0);
 
     const bannerProps:BannerProps = {
         imageUrl: "/images/banner/banner-1.jpg"
@@ -74,7 +75,9 @@ const HomePage = (props: PageProps) => {
         BetService.getUserBets()
         .then((res) => {
             setUserBets(res);
-        })
+        });
+        if(AuthService.isLogged()) 
+            setUserBalance(AuthService.getUserBalance());
     }, []);
 
     return (
@@ -86,7 +89,7 @@ const HomePage = (props: PageProps) => {
                     {!allCategorySelected ? 
                         <>
                             <SectionTitle title={`${selectedCategory.label} (${matchList.length})`} />
-                            <MatchList userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList} />
+                            <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList} />
                         </>
                     : 
                         categories.filter((category: Category) => category.id != "-1").map((category: Category) => {
@@ -94,7 +97,7 @@ const HomePage = (props: PageProps) => {
                             return (
                                 <div key={category.id}>
                                     <SectionTitle title={`${category.label} (${matchList_.length})`} />
-                                    <MatchList userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList_} />
+                                    <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList_} />
                                 </div>
                             )
                         })
