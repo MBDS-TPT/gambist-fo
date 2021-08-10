@@ -10,6 +10,7 @@ import EditProfile from "../../components/edit-profile/EditProfile";
 import ProgressCardWidget from "../../components/card-widget/ProgressCardWidget";
 import { useContext } from "react";
 import UIContext from "../../components/ui-context/UIContext";
+import { UserService } from "../../services/user/user.service";
 
 interface PageProps {
     
@@ -32,6 +33,26 @@ const ProfilePage = (props: PageProps) => {
         setBalance(AuthService.getUserBalance());
     }, []);
 
+    const onChangePassword = (password: string, newPassword: string) => {
+        UserService.changePassword(password, newPassword)
+        .then((res) => {
+
+        }).catch((err) => {});
+    }   
+
+    const onEditProfil = (firstname: string, lastname: string) => {
+        UserService.editProfil(firstname, lastname)
+        .then((res) => {
+
+        }).catch((err) => {});
+    }
+
+    const onRecharcheAccount = (montant: number) => {
+        UserService.creditAccount('', montant)
+        .then((res) => {})
+        .catch((err) => {});
+    }
+
     return (
         <Wrapper>
             <Page>
@@ -43,7 +64,8 @@ const ProfilePage = (props: PageProps) => {
                     <SectionTitle title="User infos" />
                     <EditProfile 
                         userInfos={userInfos}
-                        onSubmit={() => {}}
+                        onEditProfile={onEditProfil}
+                        onChangePassword={onChangePassword}
                         />
                 </div>
                 <div className="profile-section">

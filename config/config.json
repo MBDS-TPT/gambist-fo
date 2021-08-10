@@ -47,7 +47,10 @@
         "FindAll": "user/all",
         "Add": "user/add",
         "Edit": "user/edit",
-        "Delete": "user/delete"
+        "Delete": "user/delete",
+        "ChangePassword": "user/changePassword",
+        "EditProfil": "user/editProfile",
+        "CreditAccount": "user/creditAccount"
     },
     "Authentification": {
         "Login": "authentification/login",

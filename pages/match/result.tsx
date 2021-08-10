@@ -10,6 +10,7 @@ import MatchList from '../../components/match-list/MatchList';
 import Page from '../../components/page-wrapper/Page';
 import SectionTitle from '../../components/section-title/SectionTitle';
 import { Bet, Category, Match } from '../../model/Model';
+import { AuthService } from '../../services/auth/auth.service';
 import { BetService } from '../../services/bet/bet.service';
 import { CategoryService } from '../../services/category/category.service';
 import { MatchService } from '../../services/match/match.service';
@@ -33,6 +34,7 @@ const MatchHistoryPage = (props: PageProps) => {
     const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
     const [allCategorySelected, setAllCategorySelected] = useState<Boolean>(true);
     const [userBets, setUserBets] = useState<Bet[]>([]);
+    const [userBalance, setUserBalance] = useState<number>(0);
 
     const bannerProps:BannerProps = {
         imageUrl: "/images/banner/banner-1.jpg"
@@ -68,7 +70,9 @@ const MatchHistoryPage = (props: PageProps) => {
         BetService.getUserBets()
         .then((res) => {
             setUserBets(res);
-        })
+        });
+        if(AuthService.isLogged()) 
+            setUserBalance(AuthService.getUserBalance());
     }, []);
 
     return (
@@ -80,7 +84,7 @@ const MatchHistoryPage = (props: PageProps) => {
                     {!allCategorySelected ? 
                         <>
                             <SectionTitle title={`${selectedCategory.label} (${matchList.length})`} />
-                            <MatchList userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList} />
+                            <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList} />
                         </>
                     : 
                         categories.filter((category: Category) => category.id != "-1").map((category: Category) => {
@@ -88,7 +92,7 @@ const MatchHistoryPage = (props: PageProps) => {
                             return (
                                 <div key={category.id}>
                                     <SectionTitle title={`${category.label} (${matchList_.length})`} />
-                                    <MatchList userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList_} />
+                                    <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} tableHeader="NATIONAL CHAMPIONSHIP" matchDetailPath='/match' matches={matchList_} />
                                 </div>
                             )
                         })
