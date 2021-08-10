@@ -17,6 +17,7 @@ export interface NavLinkProps {
 export interface HeaderProps {
     className?: string;
     loginLink?: string;
+    profileLink?: string;
     navigationLinks?: NavLinkProps[];
     onLogout?: Function;
     user?: User;
@@ -27,7 +28,8 @@ const Header: React.FC<HeaderProps> = ({
     loginLink='#',
     navigationLinks=[],
     onLogout,
-    user
+    user,
+    profileLink='/user-profile'
 }) => {
 
     const [userLogged, setUserLogged] = useState<Boolean>(false);
@@ -71,7 +73,11 @@ const Header: React.FC<HeaderProps> = ({
                     )
                     : (
                         <>
-                        <span>{user?.firstname}</span>
+                        <CTA
+                            className="profile-link"
+                            href={profileLink}
+                            >Profile</CTA>
+                        {/* <span>{user?.firstname}</span> */}
                         <CTA
                             // bgColor="var(--gray)"
                             // borderColor="transparent"
@@ -103,6 +109,9 @@ const Wrapper = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+    }
+    .profile-link {
+        color: var(--white);
     }
     .left-section {
         display: flex;

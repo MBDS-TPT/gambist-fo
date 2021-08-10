@@ -76,5 +76,8 @@ export class MatchService extends BasicService {
         return `${date.getHours}:${date.getMinutes()}`;
     }
 
+    static getMatchUrl(id: any) {
+        return Config.BASE_URL + Config.Match.FindById+"?id="+id
+    }
 
 }

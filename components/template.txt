@@ -1,0 +1,24 @@
+import React from 'react';
+import styled from 'styled-components';
+
+export interface FooterProps {
+    className?: string;
+}
+
+const ProgressBar: React.FC<FooterProps> = ({
+    className=''
+}) => {
+    return (
+        <Wrapper className={["progress-bar", className].join(' ')}>
+
+        </Wrapper>
+    )
+}
+
+const Wrapper = styled.div`
+    &.progress-bar {
+        
+    }
+`;
+
+export default ProgressBar;

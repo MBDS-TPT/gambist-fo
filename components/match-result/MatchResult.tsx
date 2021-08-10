@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Match } from '../../model/Model';
 import StatDivider from './StatDivider';
 
 export interface MatchResultProps {
     className?: string;
+    match: Match;
 }
 
 const MatchResult:React.FC<MatchResultProps> = ({
-    className=''
+    className='',
+    match
 }) => {
 
     return (
         <Wrapper className={["match-result", className].join(' ')}>
-            <StatDivider title="Score" teamA={0} teamB={2} />
+            <StatDivider title="Score" teamA={match.scoreA} teamB={match.scoreB} />
         </Wrapper>
     );
 }

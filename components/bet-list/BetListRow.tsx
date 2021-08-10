@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Bet } from '../../model/Model';
+import UIContext from '../ui-context/UIContext';
 
 export interface BetListRowProps {
     className?: string;
@@ -15,6 +17,7 @@ const BetListRow:React.FC<BetListRowProps> = ({
 }) => {
 
     const [betWon, setBetWon] = useState<boolean>(false);
+    const appContext = useContext(UIContext);
 
     const wonTheBet = () : boolean => {
         if(!bet.team) {
@@ -49,13 +52,13 @@ const BetListRow:React.FC<BetListRowProps> = ({
                     <span>{bet?.odds?.toFixed(2)}</span>
                 </div>
                 <div className={`bet-value`}>
-                    <span>{bet.betValue} $</span>
+                    <span>{bet.betValue} {appContext?.currency}</span>
                 </div>
                 <div className={`bet-winnings ${betWon ? 'bet-won' : 'lost-bet'}`}>
                     {bet && betWon ? (
-                        <span>{((bet.betValue * (bet.odds || 1))-bet.betValue).toFixed(2)} $</span>
+                        <span>{((bet.betValue * (bet.odds || 1))-bet.betValue).toFixed(2)} {appContext?.currency}</span>
                     ) : (
-                        <span>{(-(bet.betValue).toFixed(2))} $</span>
+                        <span>{(-(bet.betValue).toFixed(2))} {appContext?.currency}</span>
                     )}
                 </div>
                 <div className="bet-date">

@@ -23,8 +23,17 @@ export class AuthService extends BasicService {
         else return null;
     }
 
+    static isLogged() {
+        return !!this.getUserInfosFromLS();
+    }
+
     static saveUserInfosToLS(user: any) {
         localStorage.setItem('userinfos', JSON.stringify(user));
+    }
+
+    static getUserBalance() {
+        const user = this.getUserInfosFromLS();
+        return user.bankBalance;
     }
 
     static getUserMatchIds() {
