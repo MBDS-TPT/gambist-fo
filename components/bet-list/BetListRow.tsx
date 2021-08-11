@@ -33,7 +33,7 @@ const BetListRow:React.FC<BetListRowProps> = ({
     }, []);
 
     return (
-        <Wrapper className={["bet-list-row", className].join(' ')} >
+        <Wrapper id={bet.id} className={["bet-list-row", className].join(' ')} >
             <div className="teams-info">
                 <div className="teams-name">
                     <div className="team-A">{bet?.match?.teamA?.name}</div>

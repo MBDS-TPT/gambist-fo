@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 export interface FooterProps {
@@ -12,13 +14,22 @@ const ProgressBar: React.FC<FooterProps> = ({
     progressValue=0,
     progressionColor='blue'
 }) => {
+
+    const [value, setValue] = useState(progressValue);
+
+    useEffect(() => {
+        let v = isNaN(progressValue) ? 0 : !isFinite(progressValue) ? 100 : progressValue;
+        // v = !isFinite(v) ? 100 : v;
+        setValue(v);
+    }, [progressValue]);
+
     return (
         <Wrapper 
             progressionColor={progressionColor} 
-            progression={progressValue} 
+            progression={value} 
             className={["progress-bar-container", className].join(' ')}
             >
-            <div className="progress-label"><span>{progressValue}%</span></div>
+            <div className="progress-label"><span>{value}%</span></div>
             <div className="progress-bar">
                 <div className="bar"></div>
             </div>

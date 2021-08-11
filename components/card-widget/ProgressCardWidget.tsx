@@ -1,4 +1,6 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import ProgressBar from '../progress-bar/ProgressBar';
 
@@ -7,20 +9,29 @@ export interface ProgressCardWidgetProps {
     label?: string;
     value: number;
     color?: string;
+    total: number
 }
 
 const ProgressCardWidget: React.FC<ProgressCardWidgetProps> = ({
     className='',
     label,
     value,
-    color="#fff"
+    color="#fff",
+    total
 }) => {
+
+    const [_value, setValue] = useState(0);
+
+    useEffect(() => {
+        setValue(value*100/total);
+    }, [value]);
+
     return (
         <Wrapper borderColor={color} className={["card-widget", className].join(' ')}>
             <div className="card-content">
-                <span className="value">{value+100}</span>
+                <span className="value">{value}/{total}</span>
                 <span className="label">{label}</span>
-                <ProgressBar progressValue={value} progressionColor={color} />
+                <ProgressBar progressValue={total == 0 ? 0 : _value} progressionColor={color} />
             </div>
         </Wrapper>
     )

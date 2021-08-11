@@ -12,17 +12,17 @@ import UIContext from "../../components/ui-context/UIContext";
 import { UserService } from "../../services/user/user.service";
 import Button from "../../components/form/Button";
 import Modal from "../../components/modal/Modal";
-import TextInput from "../../components/form/TextInput";
 import RechargeAccountForm from "../../components/recharge-account-form/RechargeAccountForm";
+import { BetService } from "../../services/bet/bet.service";
 
 interface PageProps {
-    
+    statistics: any
 }
 
 const ProfilePage = (props: PageProps) => {
 
     const {
-        
+        statistics
     } = props;
 
     const [editProfilMessage, setEditProfilMessage] = useState<any>();
@@ -31,11 +31,26 @@ const ProfilePage = (props: PageProps) => {
     const [userInfos, setUserInfos] = useState<any>(null);
     const [balance, setBalance] = useState<number>(500000);
     const [showRechargeModal, setShowRechargeModal] = useState<boolean>();
+
+    const [totalWonBet, setTotalWonBet] = useState(0);
+    const [totalLostBet, setTotalLostBet] = useState(0);
+    const [totalBet, setTotalBet] = useState(0);
+    
     const appContext = useContext(UIContext);
+
 
     useEffect(() => {
         setUserInfos(AuthService.getUserInfosFromLS());
         setBalance(AuthService.getUserBalance());
+        BetService.getUserBetStat()
+        .then((res) => {
+            setTotalWonBet(res.data.won);
+            setTotalLostBet(res.data.lost);
+            setTotalBet(res.data.won+res.data.lost)
+        })
+        .catch((err) => {
+            console.error(err)
+        });
     }, []);
 
     const onChangePassword = async (password: string, newPassword: string) => {
@@ -96,23 +111,26 @@ const ProfilePage = (props: PageProps) => {
                 <div className="profile-section">
                     <SectionTitle title="Statistics" />
                     <div className="bet-count-stat">
-                        <ProgressCardWidget
+                        {/* <ProgressCardWidget
                             className="bet-stat" 
-                            value={100}
+                            value={totalBet}
                             color={"var(--gray)"}
                             label="TOTAL BET"
-                        />
+                            total={totalBet}
+                        /> */}
                         <ProgressCardWidget 
                             className="bet-stat"
-                            value={25}
+                            value={totalWonBet}
                             color={"var(--green)"}
                             label="WON BETS"
+                            total={totalBet}
                         />
                         <ProgressCardWidget 
                             className="bet-stat"
-                            value={50}
+                            value={totalLostBet}
                             color={"var(--red)"}
                             label="LOST BETS"
+                            total={totalBet}
                         />
                     </div>
                 </div>
@@ -149,7 +167,7 @@ const Wrapper = styled.div`
 `;
 
 
-export const getServerProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
         props: {
             statistics: {}

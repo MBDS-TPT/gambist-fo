@@ -59,4 +59,9 @@ export class BetService extends BasicService {
         return []
     }
 
+    static async getUserBetStat() { 
+        const user = AuthService.getUserInfosFromLS();
+        return await BasicService.fetchData(Config.Bet.BetStat, {userid: user.id});
+    }
+
 }

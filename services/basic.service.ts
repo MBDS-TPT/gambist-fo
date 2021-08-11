@@ -1,5 +1,6 @@
 import Config from '../config/config.json';
 
+//https://gambist-backend.herokuapp.com/
 export const getBaseUrl = () => process.env.API_URL || process.env.BASE_URL || Config.BASE_URL;
 
 export default abstract class BasicService {
