@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 export interface ModalProps {
+    className?: string;
     onClose?: any;
     title?: string;
     top?: Number;
@@ -15,7 +16,8 @@ const Modal: React.FC<ModalProps> = ({
     title,
     show = false,
     top = 100,
-    width = 'small'
+    width = 'small',
+    className
 }) => {
 
     const [visible, SetVisible] = useState<Boolean>(show);
@@ -25,6 +27,10 @@ const Modal: React.FC<ModalProps> = ({
         // SetVisible(false);
     }
 
+    useEffect(() => {
+        document.body.style.overflow = show ? 'hidden' : 'unset';
+    }, [show]);
+
     const ClickOutside = (event: any) => {
         if(event.target.classList.contains("modal-wrapper"))
             CloseModal(event);
@@ -32,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({
 
     return (
         <>
-            {show && <Wrapper onClick={ClickOutside} topPosition={top} className="modal-wrapper">
+            {show && <Wrapper onClick={ClickOutside} topPosition={top} className={["modal-wrapper", className].join(' ')}>
                 <div className={`m-content ${width}`}>
                     <div className="m-header">
                         <h5 className="modal-title">{ title }</h5>

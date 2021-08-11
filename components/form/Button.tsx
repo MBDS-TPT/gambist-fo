@@ -9,6 +9,7 @@ export interface ButtonProps {
     success?: Boolean;
     showLoader?: boolean;
     disabled?: boolean;
+    loaderSize?: number;
 }
 
 const Button:React.FC<ButtonProps> = ({
@@ -16,13 +17,14 @@ const Button:React.FC<ButtonProps> = ({
     onClick,
     value,
     showLoader=false,
-    disabled
+    disabled,
+    loaderSize=40
 }) => {
 
 
     return (
         <Wrapper disabled={disabled || showLoader} className={["btn", className].join(' ')} type='button' onClick={onClick}>
-            {showLoader && <Loader color={'var(--white)'} margin='0 10px 0 0' />}
+            {showLoader && <Loader width={loaderSize} color={'var(--white)'} margin='0 10px 0 0' />}
             <span>{ value }</span>
         </Wrapper>
     );

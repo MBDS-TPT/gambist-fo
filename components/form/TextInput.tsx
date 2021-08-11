@@ -45,6 +45,7 @@ const TextInput:React.FC<TextInputProps> = ({
                 name={name}
                 placeholder={placeholder}
                 required={required}
+                min={0}
                 autoComplete={autoComplete}
                 />
         </Wrapper>

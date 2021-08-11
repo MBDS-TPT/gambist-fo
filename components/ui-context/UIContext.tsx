@@ -7,6 +7,7 @@ export interface UIContextProps {
     userLogged?: boolean;
     maximumBet?: number;
     minimumBet?: number;
+    getUserInfo?: Function;
 }
 
 export interface UIContextInterface {
@@ -16,6 +17,7 @@ export interface UIContextInterface {
     userLogged?: boolean;
     maximumBet?: number;
     minimumBet?: number;
+    getUserInfo?: Function;
 }
 
 const UIContext = React.createContext<UIContextInterface | undefined>(undefined);
@@ -27,7 +29,8 @@ export const UIProvider: React.FC<UIContextProps> = ({
     userInfo,
     userLogged=false,
     maximumBet=999999999,
-    minimumBet=0
+    minimumBet=0,
+    getUserInfo
 }) => {
 
     const props: UIContextInterface = {
@@ -36,7 +39,8 @@ export const UIProvider: React.FC<UIContextProps> = ({
         maximumBet,
         minimumBet,
         userInfo,
-        userLogged
+        userLogged,
+        getUserInfo
     }
 
     return <UIContext.Provider value={{...props}}>

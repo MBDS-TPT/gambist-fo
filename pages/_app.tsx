@@ -25,10 +25,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <UIProvider baseUrl="" currency={Config.Currency} userInfo={userInfos}>
-      <GlobalStyle/>
-      <Component {...pageProps} />
-    </UIProvider>
+      <UIProvider baseUrl="" currency={Config.Currency} userInfo={userInfos} >
+        <GlobalStyle/>
+        <Component {...pageProps} />
+      </UIProvider>
   );
 }
 export default MyApp

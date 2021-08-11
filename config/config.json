@@ -1,5 +1,5 @@
 {
-    "BASE_URL": "http://localhost:8080/",
+    "BASE_URL": "https://gambist-backend.herokuapp.com/",
     "Team": {
         "FindById": "team/get",
         "FindAll": "team/all",
