@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import React, { useState } from 'react'; 
+import { useContext } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { BannerProps } from '../components/banner/Banner';
@@ -9,6 +10,7 @@ import MatchCardResult from '../components/match-detail/MatchCardResult';
 import MatchList from '../components/match-list/MatchList';
 import Page from '../components/page-wrapper/Page';
 import SectionTitle from '../components/section-title/SectionTitle';
+import UIContext from '../components/ui-context/UIContext';
 import { Bet, Category, Match } from '../model/Model';
 import { AuthService } from '../services/auth/auth.service';
 import { BetService } from '../services/bet/bet.service';
@@ -34,6 +36,7 @@ const HomePage = (props: PageProps) => {
     const [allCategorySelected, setAllCategorySelected] = useState<Boolean>(true);
     const [userBets, setUserBets] = useState<Bet[]>([]);
     const [userBalance, setUserBalance] = useState<number>(0);
+    const appContext = useContext(UIContext);
 
     const bannerProps:BannerProps = {
         imageUrl: "/images/banner/banner-1.jpg"
@@ -62,10 +65,12 @@ const HomePage = (props: PageProps) => {
                     ...userBets,
                     res.data
                 ]);
+                AuthService.updateUserBalance(userBalance - bet.betValue);
+                setUserBalance(userBalance - bet.betValue);
                 successCallback();
             }
             else {
-                errorCallback(`${res.message} (${AuthService.getUserBalance()} $)`);
+                errorCallback(`${res.message} (${AuthService.getUserBalance()} ${appContext?.currency})`);
             }
         });
     }

@@ -21,6 +21,7 @@ export interface HeaderProps {
     navigationLinks?: NavLinkProps[];
     onLogout?: Function;
     user?: User;
+    registrationLink?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -29,7 +30,8 @@ const Header: React.FC<HeaderProps> = ({
     navigationLinks=[],
     onLogout,
     user,
-    profileLink='/user-profile'
+    profileLink='/user-profile',
+    registrationLink='/registration'
 }) => {
 
     const [userLogged, setUserLogged] = useState<Boolean>(false);
@@ -61,15 +63,27 @@ const Header: React.FC<HeaderProps> = ({
                 <div className="right-section">
                     {!userLogged 
                     ? (
-                        <ButtonLink
-                            bgColor="var(--green)"
-                            borderColor="transparent"
-                            bgColorHover="var(--gray)"
-                            className='login-btn'
-                            link={loginLink}
-                            >
-                            LOGIN
-                        </ButtonLink>
+                        <>
+                            <ButtonLink
+                                bgColor="var(--green)"
+                                borderColor="transparent"
+                                bgColorHover="var(--gray)"
+                                className='login-btn'
+                                link={loginLink}
+                                >
+                                LOGIN
+                            </ButtonLink>
+                            &nbsp;/&nbsp;
+                            <ButtonLink
+                                bgColor="var(--yellow)"
+                                borderColor="transparent"
+                                bgColorHover="var(--gray)"
+                                className='login-btn'
+                                link={registrationLink}
+                                >
+                                REGISTRATION
+                            </ButtonLink>
+                        </>
                     )
                     : (
                         <>
@@ -124,10 +138,10 @@ const Wrapper = styled.div`
     }
     .button-link.login-btn,
     .cta.logout-btn {
-        height: 25px;
+        height: 20px;
         font-size: 12px;
         font-weight: 600;
-        line-height: 6px;
+        line-height: 2px;
         :hover {
             background-color: var(--dark-gray);
             color: var(--white);

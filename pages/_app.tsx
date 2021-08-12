@@ -21,7 +21,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [siteConfig, setSiteConfig] = useState<UIContextInterface>();
   
   useEffect(() => {
-    setUserInfos(AuthService.getUserInfosFromLS());
+    AuthService.refreshUserInfo().then((res) => {
+      setUserInfos(AuthService.getUserInfosFromLS());
+    }).catch((err) => {
+      console.log(err);
+    });
   }, []);
 
   return (

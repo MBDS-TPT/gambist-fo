@@ -11,6 +11,25 @@ export class AuthService extends BasicService {
         }, 'POST');
     }
 
+    static async refreshUserInfo() {
+        let user = this.getUserInfosFromLS();
+        if(user) {
+            user = await BasicService.fetchData(Config.Authentification.UserInfos, {userid: user.id});
+            this.saveUserInfosToLS(user);
+        }
+    }
+   
+    static async registration(userinfo: any) {
+        return BasicService.postData(Config.Authentification.Registration, {
+            email: userinfo.email,
+            password: userinfo.password,
+            firstname: userinfo.firstname,
+            lastname: userinfo.lastname,
+            username: userinfo.username,
+            dayOfBirth: userinfo.dayOfBirth
+        }, 'POST');
+    }
+
     static logout() {
         localStorage.removeItem('userinfos');
         this.redirect('/home')
@@ -21,6 +40,14 @@ export class AuthService extends BasicService {
         if(userinfos)   
             return JSON.parse(userinfos);
         else return null;
+    }
+
+    static updateUserBalance(balance: number) {
+        const user = this.getUserInfosFromLS();
+        if(user) {
+            user.bankBalance = balance;
+            this.saveUserInfosToLS(user);
+        }
     }
 
     static isLogged() {

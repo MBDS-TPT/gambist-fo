@@ -54,6 +54,13 @@ const BetModal: React.FC<BetModalProps> = ({
         setBetValue(value);
     }
 
+    const _onClose = () => {
+        setErrorMessage("");
+        if(onClose)
+            onClose();
+        setBetValue(0);
+    }
+
     const onSubmitBet = (event: any) => {
         const user = 1
         if(betValue > 0) {
@@ -67,7 +74,7 @@ const BetModal: React.FC<BetModalProps> = ({
             if(selectedTeam)
                 bet.teamId = selectedTeam.id;
             if(onSubmit) {
-                onSubmit(bet, onClose, (message: string) => {
+                onSubmit(bet, _onClose, (message: string) => {
                     setErrorMessage(message);
                 })
                 // .then((res: any)=> {

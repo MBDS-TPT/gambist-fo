@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
+import ButtonLink from '../cta/ButtonLink';
 import Button from '../form/Button';
 import TextInput from '../form/TextInput';
 
@@ -51,7 +52,12 @@ const Login: React.FC<LoginProps> = ({
                     </form>
                     {errorMessage && <span className="error-message">{errorMessage}</span>}
                 </div>
-                <div className="l-card-footer"></div>
+                <div className="l-card-footer">
+                    <ButtonLink link="/registration" 
+                        bgColorHover="transparent" 
+                        textColor="var(--green)" 
+                        textColorHover="var(--green)" >Register</ButtonLink>
+                </div>
             </div>
         </Wrapper>
     )
@@ -90,6 +96,12 @@ const Wrapper = styled.div`
         height: 60px;
         font-weight: 600;
         margin-bottom: 5px;
+    }
+    .l-card-footer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 20px;
     }
 `;
 
