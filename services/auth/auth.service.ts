@@ -37,9 +37,13 @@ export class AuthService extends BasicService {
 
     static getUserInfosFromLS() {
         const userinfos = localStorage.getItem('userinfos');
-        if(userinfos)   
-            return JSON.parse(userinfos);
-        else return null;
+        try {
+            if(userinfos)   
+                return JSON.parse(userinfos);
+        }
+        catch(err) {
+             return null;
+        }
     }
 
     static updateUserBalance(balance: number) {

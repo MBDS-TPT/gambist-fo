@@ -1,18 +1,48 @@
-import BasicService from "../basic.service";
-import Config from "../../config/config.json";
+import Config from "../../config/site-setting.json";
 
-export class ConfigService  {
+export const getBaseUrl = () => process.env.CONF_API_URL || process.env.CONF_BASE_URL || Config.BASE_URL;
+
+export class ConfigService {
+
 
     static async getCurrency() {
-        return "$";
+        return ConfigService.fetchData(Config.Currency)
+        .then((res) => {
+            return res[0].configvalue;
+        }).catch((err) => console.log(err));
     }
 
     static async getMaximumBetValue() {
-        return 5000;
+        return ConfigService.fetchData(Config.MaximumBetValue)
+        .then((res) => {
+            return res[0].configvalue;
+        }).catch((err) => console.log(err));
     }
 
     static async getMinimumBetValue() {
-        return 5;
+        return ConfigService.fetchData(Config.MinimumBetValue)
+        .then((res) => {
+            return res[0].configvalue;
+        }).catch((err) => console.log(err));
+    }
+
+
+    static async fetchData(uri: string, params: any=null)  {
+        try {
+            let paramsString = "";
+            if(params) {
+                const keys = Object.keys(params)
+                const searchParams = new URLSearchParams();
+                for(const key of keys)
+                    searchParams.append(key, params[key])
+                    paramsString = searchParams.toString();
+            }
+            console.log("$>", getBaseUrl() + uri + (params ? "?" + paramsString : ""), 'GET')
+            const res = await fetch(getBaseUrl() + uri + (params ? "?" + paramsString : ""))
+            return await res.json()
+        } catch(error) {
+            console.error("error >", error)
+        }
     }
 
 }

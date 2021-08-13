@@ -62,29 +62,26 @@ const BetModal: React.FC<BetModalProps> = ({
     }
 
     const onSubmitBet = (event: any) => {
-        const user = 1
-        if(betValue > 0) {
-            const bet: Bet = {
-                betDate: new Date(),
-                betValue: betValue,
-                odds: getBetOdds(),
-                matchId: match?.id,
-                userId: user
-            }
-            if(selectedTeam)
-                bet.teamId = selectedTeam.id;
-            if(onSubmit) {
-                onSubmit(bet, _onClose, (message: string) => {
-                    setErrorMessage(message);
-                })
-                // .then((res: any)=> {
-                //     console.log("===", res);
-                //     // onClose();
-                // })
-                // .catch((err:any) => {
-                //     console.log(err);
-                // });
-            }
+        const bet: Bet = {
+            betDate: new Date(),
+            betValue: betValue,
+            odds: getBetOdds(),
+            matchId: match?.id,
+            userId: 1
+        }
+        if(selectedTeam)
+            bet.teamId = selectedTeam.id;
+        if(onSubmit) {
+            onSubmit(bet, _onClose, (message: string) => {
+                setErrorMessage(message);
+            })
+            // .then((res: any)=> {
+            //     console.log("===", res);
+            //     // onClose();
+            // })
+            // .catch((err:any) => {
+            //     console.log(err);
+            // });
         }
     }
 

@@ -1,5 +1,5 @@
 {
-    "BASE_URL": "https://gambist-backend.herokuapp.com/",
+    "BASE_URL": "http://localhost:8080/",
     "Team": {
         "FindById": "team/get",
         "FindAll": "team/all",
@@ -40,12 +40,13 @@
         "FindByUserAndCategory": "bet/findByUserAndCategory",
         "Add": "bet/add",
         "Edit": "bet/edit",
-        "Delete": "bet/delete"
+        "Delete": "bet/delete",
+        "BetStat": "bet/getUserBetStatistics"
     },
     "User": {
         "FindById": "user/get",
         "FindAll": "user/all",
-        "Add": "user/add",
+        "Register)": "user/add",
         "Edit": "user/edit",
         "Delete": "user/delete",
         "ChangePassword": "user/changePassword",
@@ -54,7 +55,8 @@
     },
     "Authentification": {
         "Login": "authentification/login",
-        "Registration": "authentification/registration"
+        "Registration": "authentification/registration",
+        "UserInfos": "user/getUserById"
     },
     "Currency": "$"
 }

@@ -57,22 +57,32 @@ const HomePage = (props: PageProps) => {
     }
 
     const OnPostBet = async (bet: any, successCallback = () => {}, errorCallback = (message: any) => {}) => {
-        BetService.postBet(bet)
-        .then((res) => {
-            if(res.result !== "KO") {
-                BetService.addBetToLS(res);
-                setUserBets([
-                    ...userBets,
-                    res.data
-                ]);
-                AuthService.updateUserBalance(userBalance - bet.betValue);
-                setUserBalance(userBalance - bet.betValue);
-                successCallback();
-            }
-            else {
-                errorCallback(`${res.message} (${AuthService.getUserBalance()} ${appContext?.currency})`);
-            }
-        });
+        const minBet = appContext?.minimumBet || 0;
+        const maxBet = appContext?.maximumBet || 9999999;
+        console.log(minBet, maxBet);
+        if(bet.betValue < minBet) {
+            errorCallback(`The minimum bet value is ${minBet}.`);
+        }
+        else if(bet.betValue > maxBet) {
+            errorCallback(`The maximum bet value is ${maxBet}.`);
+        } else {
+            BetService.postBet(bet)
+            .then((res) => {
+                if(res.result !== "KO") {
+                    BetService.addBetToLS(res);
+                    setUserBets([
+                        ...userBets,
+                        res.data
+                    ]);
+                    AuthService.updateUserBalance(userBalance - bet.betValue);
+                    setUserBalance(userBalance - bet.betValue);
+                    successCallback();
+                }
+                else {
+                    errorCallback(`${res.message} (${AuthService.getUserBalance()} ${appContext?.currency})`);
+                }
+            });
+        }
     }
 
     useEffect(() => {
