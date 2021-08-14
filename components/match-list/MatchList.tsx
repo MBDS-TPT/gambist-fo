@@ -9,7 +9,7 @@ import MatchRow from './MatchRow';
 
 export interface MatchListProps {
     className?: string;
-    tableHeader: string;
+    tableHeader?: string;
     matches: Match[];
     userBets?: any[];
     matchDetailPath?: string;
@@ -19,7 +19,7 @@ export interface MatchListProps {
 
 const MatchList: React.FC<MatchListProps> = ({
     className='',
-    tableHeader,
+    tableHeader='',
     matches=[],
     matchDetailPath,
     onPostBet,

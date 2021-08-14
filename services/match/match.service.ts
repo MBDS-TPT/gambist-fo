@@ -33,6 +33,14 @@ export class MatchService extends BasicService {
     static async getAllMatchId() {
         return BasicService.fetchData(Config.Match.GetAllMatchId);
     }
+    
+    static async getTodaysMatch() {
+        return BasicService.fetchData(Config.Match.TodaysMatch);
+    }
+    
+    static async getOngoingMatch() {
+        return BasicService.fetchData(Config.Match.OngoingMatch);
+    }
 
     static getUpcomingMatchByCategoryName(matches: any, categoryName: string) {
         if(matches) {

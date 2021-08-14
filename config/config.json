@@ -24,7 +24,9 @@
         "UpcomingMatchGroupedByCategory": "match/upcoming-match/grouped-by-cartegory",
         "OutDatedMatchGroupedByCategory": "match/getOutDatedMatchGroupedByCategory",
         "GetAllMatchId": "match/getAllMatchId",
-        "GetLatestMatchResult": "match/getLatestMatchResult"
+        "GetLatestMatchResult": "match/getLatestMatchResult",
+        "TodaysMatch": "match/getTodaysMatch",
+        "OngoingMatch": "match/getOnGoingMatch"
     },
     "BetType": {
         "FindById": "betType/get",

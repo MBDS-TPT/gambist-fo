@@ -20,6 +20,7 @@ interface PageProps {
     categories: any;
     matches: any;
     latestMatchResult: Match[];
+    todaysMatch: Match[];
 }
 
 const HomePage = (props: PageProps) => {
@@ -27,7 +28,8 @@ const HomePage = (props: PageProps) => {
     const {
         categories,
         matches,
-        latestMatchResult
+        latestMatchResult,
+        todaysMatch
     } = props;
 
     const [matchList, setMatchList] = useState<Match[]>([]);
@@ -36,6 +38,7 @@ const HomePage = (props: PageProps) => {
     const [allCategorySelected, setAllCategorySelected] = useState<Boolean>(true);
     const [userBets, setUserBets] = useState<Bet[]>([]);
     const [userBalance, setUserBalance] = useState<number>(0);
+    const [onGoingMatch, setOnGoingMatch] = useState<Match[]>(todaysMatch);
     const appContext = useContext(UIContext);
 
     const bannerProps:BannerProps = {
@@ -50,6 +53,10 @@ const HomePage = (props: PageProps) => {
                 if(category.id == '-1') setAllCategorySelected(true);
                 else  {
                     setMatchList(MatchService.getUpcomingMatchByCategoryName(matches, category.label));
+                    setOnGoingMatch(todaysMatch.filter((m)=> {
+                        console.log(m.categoryId, category.id)
+                        return m.category?.id == category.id
+                    }));
                     setAllCategorySelected(false);
                 }
             }
@@ -93,14 +100,17 @@ const HomePage = (props: PageProps) => {
         });
         if(AuthService.isLogged()) 
             setUserBalance(AuthService.getUserBalance());
-    }, []);
-
-    return (
-        <Wrapper>
+        }, []);
+        
+        return (
+            <Wrapper>
             <Page>
                 <div className="section">
                     <CategoryNav { ...categoryNavProps }/>
-                    
+                    <div>
+                        <SectionTitle title={selectedCategory.label}/>
+                        <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} tableHeader="Ongoing" matchDetailPath='/match' matches={onGoingMatch} />
+                    </div>
                     {!allCategorySelected ? 
                         <>
                             <SectionTitle title={`${selectedCategory.label} (${matchList.length})`} />
@@ -117,7 +127,12 @@ const HomePage = (props: PageProps) => {
                             )
                         })
                     } 
-
+                </div>
+                <div className="section">
+                    <div >
+                        <SectionTitle title="Today's match"></SectionTitle>
+                        <MatchList userBalance={userBalance} userBets={userBets} onPostBet={OnPostBet} matchDetailPath='/match' matches={todaysMatch} />
+                    </div>
                 </div>            
                 <div className="section-2">
                     <div className="upcoming-match">
@@ -175,12 +190,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         ...categories || [] 
     ];
     const matches = await MatchService.getUpcomingMatchGroupedByCategory();
+    const todaysMatch = await MatchService.getOngoingMatch();
     const latestMatchResult = await MatchService.getLatestGameResult();
     return {
         props: {
             categories: categories || [],
             matches: matches,
-            latestMatchResult
+            latestMatchResult,
+            todaysMatch
         }
     }
 }

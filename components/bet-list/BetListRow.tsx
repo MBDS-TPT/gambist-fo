@@ -22,13 +22,16 @@ const BetListRow:React.FC<BetListRowProps> = ({
     const wonTheBet = () : boolean => {
         if(!bet.team) {
             return bet.match?.scoreA == bet.match?.scoreB
-        } else if(bet.team?.id == bet.match?.teamA?.id) {
-            return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA > bet.match?.scoreB || false;
+        } else if(bet.team?.id == bet.match?.teamA?.id) { // pari sur TeamA
+            return bet.match?.scoreA != undefined 
+                    && bet.match?.scoreB != undefined 
+                    && bet.match?.scoreA > bet.match?.scoreB || false;
         }
         return bet.match?.scoreA && bet.match.scoreB && bet.match?.scoreA < bet.match?.scoreB || false; 
     }
 
     useEffect(() => {
+        console.log(bet.betValue, bet.odds, "==>", ((bet.betValue * (bet.odds ? bet.odds : 1))-bet.betValue).toFixed(2));
         setBetWon(wonTheBet());
     }, []);
 
@@ -56,7 +59,7 @@ const BetListRow:React.FC<BetListRowProps> = ({
                 </div>
                 <div className={`bet-winnings ${betWon ? 'bet-won' : 'lost-bet'}`}>
                     {bet && betWon ? (
-                        <span>{((bet.betValue * (bet.odds || 1))-bet.betValue).toFixed(2)} {appContext?.currency}</span>
+                        <span>{((bet.betValue * (bet.odds ? bet.odds : 1))-bet.betValue).toFixed(2)} {appContext?.currency}</span>
                     ) : (
                         <span>{(-(bet.betValue).toFixed(2))} {appContext?.currency}</span>
                     )}

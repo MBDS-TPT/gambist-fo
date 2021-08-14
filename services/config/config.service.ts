@@ -1,12 +1,12 @@
 import Config from "../../config/config.json";
 
-export const getBaseUrl = () => process.env.CONF_API_URL || process.env.CONF_BASE_URL || Config.BASE_URL;
+export const getBaseUrl = () => process.env.CONF_API_URL || process.env.CONF_BASE_URL || Config.SiteSetting.BASE_URL;
 
 export class ConfigService {
 
 
     static async getCurrency() {
-        return ConfigService.fetchData(Config.Currency)
+        return ConfigService.fetchData(Config.SiteSetting.Currency)
         .then((res) => {
             return res[0].configvalue;
         }).catch((err) => console.log(err));

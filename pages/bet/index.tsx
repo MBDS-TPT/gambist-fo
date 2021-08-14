@@ -4,7 +4,8 @@ import styled from "styled-components";
 import BetList from "../../components/bet-list/BetList";
 import CategoryNav, { CategoryNavProps } from "../../components/category-nav/CategoryNav";
 import Page from "../../components/page-wrapper/Page";
-import { Bet, Category } from "../../model/Model";
+import SectionTitle from "../../components/section-title/SectionTitle";
+import { Bet, Category, State } from "../../model/Model";
 import { BetService } from "../../services/bet/bet.service";
 import { CategoryService } from "../../services/category/category.service";
 
@@ -21,6 +22,7 @@ const BetPage = (props: PageProps) => {
     const [userBets, setUserBets] = useState<Bet[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<Category>(categories[0]);
     const [allCategorySelected, setAllCategorySelected] = useState<Boolean>(true);
+    const [betInProgress, setBetInProgress] = useState<Bet[]>([]);
 
     const categoryNavProps: CategoryNavProps = {
         categories: categories,
@@ -28,11 +30,15 @@ const BetPage = (props: PageProps) => {
             if(category) {
                 setSelectedCategory(category)
                 if(category.id == '-1') {
-                    setUserBets(await BetService.getUserBets());
+                    const bets = await BetService.getUserBets();
+                    setUserBets(bets.filter((bet: Bet) => bet.state != State.CREATED));
+                    setBetInProgress(bets.filter((bet: Bet) => bet.state == State.CREATED));
                     setAllCategorySelected(true);
                 }
                 else  {
-                    setUserBets(await BetService.getUserBetsByCategory(category.id));
+                    const bets = await BetService.getUserBetsByCategory(category.id);
+                    setUserBets(bets.filter((bet: Bet) => bet.state != State.CREATED));
+                    setBetInProgress(bets.filter((bet: Bet) => bet.state == State.CREATED));
                     setAllCategorySelected(false);
                 }
             }
@@ -43,7 +49,8 @@ const BetPage = (props: PageProps) => {
         setSelectedCategory(categories[0]);
         BetService.getUserBets()
         .then((res) => {
-            setUserBets(res);
+            setUserBets(res.filter((bet: Bet) => bet.state != State.CREATED));
+            setBetInProgress(res.filter((bet: Bet) => bet.state == State.CREATED));
         })
     }, []);
 
@@ -51,6 +58,9 @@ const BetPage = (props: PageProps) => {
         <Wrapper>
             <Page>
                 <CategoryNav className="bet-category" { ...categoryNavProps }/>
+                <SectionTitle title="Bet in progress"/>
+                <BetList tableTitle={`${selectedCategory.label} (${userBets.length})`} bets={betInProgress} />
+                <SectionTitle title="Ended bet"/>
                 <BetList tableTitle={`${selectedCategory.label} (${userBets.length})`} bets={userBets} />
             </Page>
         </Wrapper>
