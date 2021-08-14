@@ -1,4 +1,4 @@
-import Config from "../../config/site-setting.json";
+import Config from "../../config/config.json";
 
 export const getBaseUrl = () => process.env.CONF_API_URL || process.env.CONF_BASE_URL || Config.BASE_URL;
 
@@ -13,14 +13,14 @@ export class ConfigService {
     }
 
     static async getMaximumBetValue() {
-        return ConfigService.fetchData(Config.MaximumBetValue)
+        return ConfigService.fetchData(Config.SiteSetting.MaximumBetValue)
         .then((res) => {
             return res[0].configvalue;
         }).catch((err) => console.log(err));
     }
 
     static async getMinimumBetValue() {
-        return ConfigService.fetchData(Config.MinimumBetValue)
+        return ConfigService.fetchData(Config.SiteSetting.MinimumBetValue)
         .then((res) => {
             return res[0].configvalue;
         }).catch((err) => console.log(err));

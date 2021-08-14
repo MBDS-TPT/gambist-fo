@@ -58,5 +58,11 @@
         "Registration": "authentification/registration",
         "UserInfos": "user/getUserById"
     },
-    "Currency": "$"
+    "Currency": "$",
+    "SiteSetting": {
+        "BASE_URL": "https://gambist-api.herokuapp.com/api/",
+        "Currency": "configurations/keyname/unitemonnetaire",
+        "MaximumBetValue": "configurations/keyname/maxmise",
+        "MinimumBetValue": "configurations/keyname/minmise"
+    }
 }
