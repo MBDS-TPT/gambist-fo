@@ -23,8 +23,9 @@ const ProgressCardWidget: React.FC<ProgressCardWidgetProps> = ({
     const [_value, setValue] = useState(0);
 
     useEffect(() => {
+        console.log("==", value, total, value*100/total)
         setValue(value*100/total);
-    }, [value]);
+    }, [value, total]);
 
     return (
         <Wrapper borderColor={color} className={["card-widget", className].join(' ')}>
