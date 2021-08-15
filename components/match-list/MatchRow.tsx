@@ -64,6 +64,7 @@ const MatchRow: React.FC<MatchRowProps> = ({
             </div>
             <a className="match-details-link" href={matchDetailUrl}>
                 <ArrowForwardIosIcon/>
+                <span>See more</span>
             </a>
         </Wrapper>
     );
@@ -75,6 +76,10 @@ const Wrapper = styled.div`
         flex-direction: row;
         background-color: var(--white);
         border-bottom: 1px solid var(--light-gray);
+        @media only screen and (max-width: 480px) {
+            flex-direction: column;
+            border-bottom: 10px solid var(--light-gray);
+        }
     }
     .teams-info {
         width: 35%;
@@ -84,16 +89,25 @@ const Wrapper = styled.div`
         flex-direction: row;
         justify-content: space-between;
         padding: 10px;
+        @media only screen and (max-width: 480px) {
+            width: 100%;
+        }
     }
     .teams-score {
         border-right: 1px solid var(--light-gray);
         padding-right: 10px;
         color: var(--green);
+        @media only screen and (max-width: 480px) {
+            border-right: 0;
+        }
     }
     .bet-choice {
         width: 65%;
         display: flex;
         flex-direction: row;
+        @media only screen and (max-width: 480px) {
+            width: 100%;
+        }
     }
     .match-draw,
     .match-team-A,
@@ -117,7 +131,25 @@ const Wrapper = styled.div`
         margin: 10px;
         align-items: center;
         justify-content: center;
-        color: var(--gray)
+        color: var(--gray);
+        @media only screen and (max-width: 480px) {
+            width: 200px;
+            margin: auto;
+            margin-bottom: 10px;
+            color: var(--green);
+            text-decoration: underline;
+        }
+    }
+    .match-details-link span {
+        display: none;
+    }
+    @media only screen and (max-width: 480px) {
+        .match-details-link svg {
+            display: none;
+        }
+        .match-details-link span {
+            display: inline;
+        }
     }
     .match-odds {
         font-weight: 700; 

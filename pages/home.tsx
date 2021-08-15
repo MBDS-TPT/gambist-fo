@@ -170,12 +170,19 @@ const Wrapper = styled.div`
     .section-2 {
         display: flex;
         justify-content: space-between;
+        @media only screen and (max-width: 480px) {
+            flex-direction: column;
+            justify-content: center;
+        }
     }
     .latest-match-result {
         min-width: 25%;
+        display: flex;
+        flex-direction: column;
     }
     .match-result {
-        margin: 0 0 20px 0 !important;
+        margin-bottom: 20px !important;
+        margin-left: auto;
     }
 `;
 

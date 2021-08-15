@@ -64,6 +64,10 @@ const Wrapper = styled.div`
         min-height: 400px;
         padding-top: 46px; 
         margin: auto;
+        @media only screen and (max-width: 480px) {
+            min-width: 340px;
+            width: auto;
+        }
     }
     .match-time,
     .match-title {
@@ -77,12 +81,34 @@ const Wrapper = styled.div`
         font-size: 34px;
         text-transform: uppercase;
         margin-bottom: 15px;
+        @media only screen and (max-width: 480px) {
+            font-size: 20px;
+        }
     }
     .teams {
         display: flex;
         flex-direction: row;
         justify-content: center;
         margin-bottom: 20px;
+    }
+    .teams {
+        @media only screen and (max-width: 480px) {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    .team-card.large {
+        @media only screen and (max-width: 480px) {
+            width: 150px;
+            height: auto;
+        }
+    }
+    .team-logo,
+    .team-logo img{
+        @media only screen and (max-width: 480px) {
+            width: 100px;
+            height: auto;
+        }
     }
     .match-card-footer {
         background-color: var(--dark-gray);

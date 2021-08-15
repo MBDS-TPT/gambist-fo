@@ -40,7 +40,7 @@ const MatchDetailPage: React.FC<PageProps> = ({
             <Page>
                 <div className="section">
                     <div>
-                        <SectionTitle title="Matchr result" />
+                        <SectionTitle title="Match result" />
                         <MatchCard match={match} />
                         <MatchResult match={match} />
                     </div>
