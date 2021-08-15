@@ -16,6 +16,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { BetService } from '../services/bet/bet.service';
 import { CategoryService } from '../services/category/category.service';
 import { MatchService } from '../services/match/match.service';
+import FormatUtil from '../utils/format.util';
 interface PageProps {
     categories: any;
     matches: any;
@@ -64,14 +65,13 @@ const HomePage = (props: PageProps) => {
     }
 
     const OnPostBet = async (bet: any, successCallback = () => {}, errorCallback = (message: any) => {}) => {
-        const minBet = appContext?.minimumBet || 0;
-        const maxBet = appContext?.maximumBet || 9999999;
-        console.log(minBet, maxBet);
+        const minBet = parseInt(appContext?.minimumBet+"") || 0;
+        const maxBet = parseInt(appContext?.maximumBet+"") || 9999999;
         if(bet.betValue < minBet) {
-            errorCallback(`The minimum bet value is ${minBet}.`);
+            errorCallback(`The minimum bet value is ${FormatUtil.formatCurrency(minBet)}${appContext?.currency}.`);
         }
         else if(bet.betValue > maxBet) {
-            errorCallback(`The maximum bet value is ${maxBet}.`);
+            errorCallback(`The maximum bet value is ${FormatUtil.formatCurrency(maxBet)}${appContext?.currency}.`);
         } else {
             BetService.postBet(bet)
             .then((res) => {
@@ -86,7 +86,7 @@ const HomePage = (props: PageProps) => {
                     successCallback();
                 }
                 else {
-                    errorCallback(`${res.message} (${AuthService.getUserBalance()} ${appContext?.currency})`);
+                    errorCallback(`${res.message} (${FormatUtil.formatCurrency(AuthService.getUserBalance())} ${appContext?.currency})`);
                 }
             });
         }
