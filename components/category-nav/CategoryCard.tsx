@@ -47,9 +47,11 @@ const Wrapper = styled(CTA)`
         justify-content: center;
         font-weight: 700;
         text-transform: uppercase;
+        cursor: pointer;
     }
     .category-link {
         color: var(--gray);
+        
     }
     svg {
         /* fill: var(--gray); */

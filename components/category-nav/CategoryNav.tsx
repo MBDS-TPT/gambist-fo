@@ -69,6 +69,10 @@ const Wrapper = styled.div`
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        @media only screen and (max-width: 480px) {
+            flex-wrap: nowrap;
+            overflow-y: auto;
+        }
     }
     .category {
         width: 120px;
@@ -81,6 +85,10 @@ const Wrapper = styled.div`
     }
     .category-link {
         color: #c0c0c0;
+        @media only screen and (max-width: 480px) {
+            width: 90px;
+            font-size: 12px;
+        }
     }
     .category-link.active,
     .category-link:hover {
