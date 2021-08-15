@@ -78,7 +78,7 @@ const Wrapper = styled.div`
         padding-bottom: 10px;
     }
     .page-header {
-        margin-bottom: 50px;
+        margin-bottom: 0px;
     }
     .page-container {
         display: flex;
